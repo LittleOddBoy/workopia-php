@@ -6,7 +6,7 @@
  * @param mixed $val
  * @return void
  */
-function d(mixed $val): void 
+function d(mixed $val): void
 {
   echo "<pre>";
   var_dump($val);
@@ -19,7 +19,7 @@ function d(mixed $val): void
  * @param mixed $val
  * @return void
  */
-function dd(mixed $val): void 
+function dd(mixed $val): void
 {
   echo "<pre>";
   var_dump($val);
@@ -61,7 +61,7 @@ function load_view(string $view_name): void
  * @param string $partial_name
  * @return void
  */
-function load_partial(string $partial_name): void 
+function load_partial(string $partial_name): void
 {
   $partial_path = base_path("views/partials/{$partial_name}.php");
 
@@ -69,5 +69,25 @@ function load_partial(string $partial_name): void
     require($partial_path);
   } else {
     echo "Partial <i>{$partial_name}</i> doesn't exist!";
+  }
+}
+
+
+function load_env(): void
+{
+  // create the path to that file
+  $envFile = base_path(".env");
+
+  // check if file exists
+  if (file_exists($envFile)) {
+    // parsing the lines
+    $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+      if (strpos(trim($line), '#') === 0) continue; // skip comments
+      list($key, $value) = explode('=', $line, 2);
+      $key = trim($key);
+      $value = trim($value);
+      putenv("$key=$value"); // set as an environment variable
+    }
   }
 }
