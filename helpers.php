@@ -73,6 +73,11 @@ function load_partial(string $partial_name): void
 }
 
 
+/**
+ * Load the environment variables manually
+ *
+ * @return void
+ */
 function load_env(): void
 {
   // create the path to that file
@@ -91,3 +96,5 @@ function load_env(): void
     }
   }
 }
+
+
