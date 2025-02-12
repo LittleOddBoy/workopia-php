@@ -1,7 +1,11 @@
-<?php require base_path("views/partials/head.php"); ?>
-<?php require base_path("views/partials/nav.php"); ?>
-<?php require base_path("views/partials/showcase.php"); ?>
-<?php require base_path("views/partials/top-banner.php"); ?>
+<!-- <?php require base_path("views/partials/head.php"); ?> -->
+<!-- <?php require base_path("views/partials/nav.php"); ?> -->
+<!-- <?php require base_path("views/partials/showcase.php"); ?> -->
+<!-- <?php require base_path("views/partials/top-banner.php"); ?> -->
+<?php load_partial('head'); ?>
+<?php load_partial('nav'); ?>
+<?php load_partial('showcase'); ?>
+<?php load_partial('top-banner'); ?>
 
     
 
@@ -196,8 +200,10 @@
         </a>
       </section>
 
-    <?php require base_path('views/partials/bottom-banner.php'); ?>
+    <!-- <?php require base_path('views/partials/bottom-banner.php'); ?> -->
+     <?php load_partial('bottom-banner'); ?>
     </section>
      
 
-<?php require base_path('views/partials/bottom.php'); ?>
+<!-- <?php require base_path('views/partials/bottom.php'); ?> -->
+ <?php load_partial('bottom'); ?>
