@@ -1,6 +1,33 @@
 <?php
 
 /**
+ * Dump value(s) within <pre> tags
+ *
+ * @param mixed $val
+ * @return void
+ */
+function d(mixed $val): void 
+{
+  echo "<pre>";
+  var_dump($val);
+  echo "</pre>";
+}
+
+/**
+ * Dump and die
+ *
+ * @param mixed $val
+ * @return void
+ */
+function dd(mixed $val): void 
+{
+  echo "<pre>";
+  var_dump($val);
+  echo "</pre>";
+  die();
+}
+
+/**
  * Get the base path to coordinate files and modules easily
  *
  * @param string $path
