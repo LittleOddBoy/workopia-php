@@ -8,7 +8,7 @@
  */
 function base_path(string $path = ""): string
 {
-  return __DIR__ . $path;
+  return __DIR__ . "/" . $path;
 }
 
 /**
@@ -19,7 +19,13 @@ function base_path(string $path = ""): string
  */
 function load_view(string $view_name): void
 {
-  require base_path("/views/{$view_name}.view.php");
+  $view_path = base_path("views/{$view_name}.view.php");
+
+  if (file_exists($view_path)) {
+    require($view_path);
+  } else {
+    echo "View <i>{$view_name}</i> doesn't exist!";
+  }
 }
 
 /**
@@ -30,5 +36,11 @@ function load_view(string $view_name): void
  */
 function load_partial(string $partial_name): void 
 {
-  require base_path("/views/partials/{$partial_name}.php");
+  $partial_path = base_path("views/partials/{$partial_name}.php");
+
+  if (file_exists($partial_path)) {
+    require($partial_path);
+  } else {
+    echo "Partial <i>{$partial_name}</i> doesn't exist!";
+  }
 }
