@@ -19,7 +19,7 @@ function base_path(string $path = ""): string
  */
 function load_view(string $view_name): void
 {
-  require base_path("views/{$view_name}.view.php");
+  require base_path("/views/{$view_name}.view.php");
 }
 
 /**
@@ -30,5 +30,5 @@ function load_view(string $view_name): void
  */
 function load_partial(string $partial_name): void 
 {
-  require base_path("views/partials/{$partial_name}.php");
+  require base_path("/views/partials/{$partial_name}.php");
 }
