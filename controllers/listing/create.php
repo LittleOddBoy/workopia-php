@@ -1,2 +1,2 @@
 <?php
-d("here is listings/create.php!");
+load_view("listings/create");

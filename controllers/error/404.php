@@ -1,3 +1,3 @@
 <?php
 
-echo "do you look for something, sir?";
+load_view('error/404');

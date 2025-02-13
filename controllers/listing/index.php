@@ -1,2 +1,2 @@
 <?php
-d("here is listings/index.php!");
+load_view('listings/index');
