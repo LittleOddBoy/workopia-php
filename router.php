@@ -70,14 +70,16 @@ class Router
   }
 
   /**
-   * Load 404 page with proper response code
+   * Load error page
    *
+   * @param int $http_code
    * @return void
    */
-  private function load_404(): void
+  private function error(int $http_code = 404): void
   {
-    http_response_code(404);
-    load_view("error/404");
+    http_response_code($http_code);
+    load_view("error/{$http_code}");
+    exit;
   }
 
   /**
@@ -98,7 +100,6 @@ class Router
     }
 
     // load the 404 if the uri and/or method doesn't found
-    $this->load_404();
-    exit;
+    $this->error(404);
   }
 }
