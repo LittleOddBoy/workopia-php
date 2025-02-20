@@ -3,15 +3,13 @@ require '../helpers.php';
 require base_path('Database.php');
 require base_path('Router.php');
 
-$config = require base_path('config/db.php');
-
-// instantiate the database
-$db = new Database($config);
-
+// instantiate router
 $router = new Router();
 $routes = require base_path("routes.php");
 
+// get the current URI
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 
+// setup the router
 $router->route($uri, $method);
