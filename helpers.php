@@ -98,3 +98,14 @@ function load_env(): void
     }
   }
 }
+
+/**
+ * Format the salary
+ *
+ * @param string $salary
+ * @return string
+ */
+function format_salary(string $salary): string
+{
+  return "$" . number_format(floatval($salary));
+}
