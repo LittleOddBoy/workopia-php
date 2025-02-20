@@ -11,7 +11,7 @@ class Database
    */
   public function __construct(array $config)
   {
-    $dsn = "mysql:host={$config['host']};port={$config['port']};dbName={$config['dbName']}";
+    $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbName']}";
 
     $options = [
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
