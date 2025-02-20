@@ -4,4 +4,6 @@ $db = new Database($config);
 
 $listings = $db->query('SELECT * FROM listings LIMIT 2')->fetchAll();
 
-load_view("home");
+load_view("home", [
+  "listings" => $listings,
+]);

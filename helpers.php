@@ -42,13 +42,15 @@ function base_path(string $path = ""): string
  * Load a view
  *
  * @param string $view_name
+ * @param array $data - default is [] - the data we wanna pass in to the view
  * @return void
  */
-function load_view(string $view_name): void
+function load_view(string $view_name, array $data = []): void
 {
   $view_path = base_path("views/{$view_name}.view.php");
 
   if (file_exists($view_path)) {
+    extract($data);
     require($view_path);
   } else {
     echo "View <i>{$view_name}</i> doesn't exist!";
@@ -96,5 +98,3 @@ function load_env(): void
     }
   }
 }
-
-
