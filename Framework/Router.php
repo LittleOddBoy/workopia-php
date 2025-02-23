@@ -106,7 +106,6 @@ class Router
         $controller_instance = new $controller;
         $controller_instance->$controller_method();
 
-        // require base_path('App/' . $r['controller']);
         return;
       }
     }
