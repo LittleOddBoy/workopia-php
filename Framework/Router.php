@@ -11,15 +11,17 @@ class Router
    *
    * @param string $method
    * @param string $uri
-   * @param string $controller
+   * @param string $action
    * @return void
    */
-  private function register_route(string $method, string $uri, string $controller): void
+  private function register_route(string $method, string $uri, string $action): void
   {
+    list($controller, $controller_method) = explode("@", $action);
     $this->routes[] = [
       'method' => $method,
       'uri' => $uri,
-      'controller' => $controller
+      'controller' => $controller,
+      'controller_method' => $controller_method,
     ];
   }
 
@@ -96,7 +98,15 @@ class Router
     foreach ($this->routes as $r) {
       // load the controller of the route if the uri and method matches
       if ($r['uri'] === $req_uri and $r['method'] === $req_method) {
-        require base_path('App/' . $r['controller']);
+        // Extract controller and controller method
+        $controller = 'App\\Controller\\' . $r['controller'];
+        $controller_method = $r['controller_method'];
+
+        // instantiate the controller and call the method 
+        $controller_instance = new $controller;
+        $controller_instance->$controller_method();
+
+        // require base_path('App/' . $r['controller']);
         return;
       }
     }
