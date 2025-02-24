@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Framework\Database;
+use App\Controllers\ErrorController;
 
 class ListingController
 {
@@ -47,6 +48,12 @@ class ListingController
     $id = $params['id'] ?? "";
     $search_params = ['id' => $id];
     $listing = $this->db->query("SELECT * FROM listings WHERE id = :id", $search_params)->fetch();
+
+    // check if listing exists
+    if (!$listing) {
+      ErrorController::not_found("Listing not found!");
+      return;
+    }
 
     load_view("listings/show", ['listing' => $listing]);
   }
