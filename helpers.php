@@ -109,3 +109,14 @@ function format_salary(string $salary): string
 {
   return "$" . number_format(floatval($salary));
 }
+
+/**
+ * Sanitize a dirty data
+ *
+ * @param string $dirty
+ * @return string
+ */
+function sanitize(string $dirty): string
+{
+  return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
+}
