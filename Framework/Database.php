@@ -1,5 +1,8 @@
 <?php
 
+namespace Framework;
+use PDO, PDOException, Exception, PDOStatement;
+
 class Database
 {
   public $conn;
