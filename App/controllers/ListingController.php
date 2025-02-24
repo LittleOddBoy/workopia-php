@@ -42,9 +42,10 @@ class ListingController
   /**
    * Show a single specific listing
    *
+   * @param array $params - the uri's params
    * @return void
    */
-  public function show($params)
+  public function show(array $params)
   {
     $id = $params['id'] ?? "";
     $search_params = ['id' => $id];
@@ -125,5 +126,34 @@ class ListingController
 
       redirect("/listings");
     }
+  }
+
+  /**
+   * Destroy a listing
+   *
+   * @param array $params - the uri's params
+   * @return void
+   */
+  public function destroy(array $params): void
+  {
+    $id = $params['id'];
+    $search_params = [
+      'id' => $id
+    ];
+
+    // get the listing to ensure it does exist
+    $listing = $this->db->query("SELECT * FROM listings WHERE id = :id", $search_params)->fetch();
+
+    // throw a not found page if the entity doesn't exist at all
+    if (!$listing) {
+      ErrorController::not_found("Listing not found");
+      return;
+    }
+
+    // respect the clean code rules :))
+    $delete_params = $search_params;
+
+    // delete the listing 
+    $this->db->query("DELETE FROM listings WHERE id = :id", $delete_params);
   }
 }

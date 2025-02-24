@@ -85,6 +85,12 @@ class Router
   {
     $req_method = $_SERVER['REQUEST_METHOD'];
 
+    // check for _method hidden input
+    if ($req_method === "POST" and isset($_POST['_method'])) {
+      // override the request method
+      $req_method = strtoupper($_POST['_method']);
+    }
+
     foreach ($this->routes as $r) {
       // split the current URI into segments
       $uri_segments = explode("/", trim($req_uri, "/"));
@@ -127,14 +133,14 @@ class Router
         // load the controller and pass in params if everything is matched
         if ($match) {
           // Extract controller and controller method
-            $controller = 'App\\Controller\\' . $r['controller'];
-            $controller_method = $r['controller_method'];
+          $controller = 'App\\Controller\\' . $r['controller'];
+          $controller_method = $r['controller_method'];
 
-            // instantiate the controller and call the method 
-            $controller_instance = new $controller;
-            $controller_instance->$controller_method($params);
+          // instantiate the controller and call the method 
+          $controller_instance = new $controller;
+          $controller_instance->$controller_method($params);
 
-            return;
+          return;
         }
       }
     }
