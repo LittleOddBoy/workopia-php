@@ -36,4 +36,20 @@ class Validation
 
     return filter_var($value, FILTER_VALIDATE_EMAIL);
   }
+
+
+  /**
+   * Validate whether two values are identical to each other
+   *
+   * @param string $value1
+   * @param string $value2
+   * @return boolean
+   */
+  public static function match(string $value1, string $value2): bool
+  {
+    $value1 = trim($value1);
+    $value2 = trim($value2);
+
+    return $value1 === $value2;
+  }
 }
