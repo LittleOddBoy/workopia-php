@@ -42,11 +42,11 @@ class ListingController
    *
    * @return void
    */
-  public function show()
+  public function show($params)
   {
-    $id = $_GET['id'] ?? "";
-    $params = ['id' => $id];
-    $listing = $this->db->query("SELECT * FROM listings WHERE id = :id", $params)->fetch();
+    $id = $params['id'] ?? "";
+    $search_params = ['id' => $id];
+    $listing = $this->db->query("SELECT * FROM listings WHERE id = :id", $search_params)->fetch();
 
     load_view("listings/show", ['listing' => $listing]);
   }
