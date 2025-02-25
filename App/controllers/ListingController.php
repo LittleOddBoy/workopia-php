@@ -6,6 +6,7 @@ use Framework\Database;
 use App\Controllers\ErrorController;
 use Framework\Session;
 use Framework\Validation;
+use Framework\Authorization;
 
 class ListingController
 {
@@ -149,6 +150,13 @@ class ListingController
     if (!$listing) {
       ErrorController::not_found("Listing not found");
       return;
+    }
+
+    // check if the request is from the owner
+    if (!Authorization::is_owner($listing->id)) {
+      $_SESSION['error_message'] = "You are not permitted to delete this listing!";
+      redirect("/listings/{$listing->id}");
+      exit;
     }
 
     // respect the clean code rules :))
