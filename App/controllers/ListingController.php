@@ -95,8 +95,6 @@ class ListingController
         "listings" => $new_listing_data,
       ]);
     } else {
-      // submit data
-
       // create fields
       $fields = [];
       foreach ($new_listing_data as $field => $value) {
@@ -126,6 +124,12 @@ class ListingController
       // run the query
       $this->db->query($query, $new_listing_data);
 
+      // set a flash message
+      Session::set_flash_message(
+        key: 'success_message',
+        message: 'Listing created successfully!'
+      );
+
       redirect("/listings");
     }
   }
@@ -154,7 +158,10 @@ class ListingController
 
     // check if the request is from the owner
     if (!Authorization::is_owner($listing->id)) {
-      $_SESSION['error_message'] = "You are not permitted to delete this listing!";
+      Session::set_flash_message(
+        key: 'error_message',
+        message: 'You are not permitted to delete this listing!'
+      );
       redirect("/listings/{$listing->id}");
       exit;
     }
@@ -166,7 +173,10 @@ class ListingController
     $this->db->query("DELETE FROM listings WHERE id = :id", $delete_params);
 
     // set flash message 
-    $_SESSION['success_message'] = 'Listing Deleted Successfully!';
+    Session::set_flash_message(
+      key: 'success_message',
+      message: 'Listing Deleted Successfully!'
+    );
 
     redirect('/listings');
   }
@@ -253,7 +263,10 @@ class ListingController
       $this->db->query($update_query, $updated_values);
 
       // set flash message and redirect
-      $_SESSION['success_message'] = "Listing Got Updated!";
+      Session::set_flash_message(
+        key: 'success_message',
+        message: 'Listing Got Updated'
+      );
       redirect("/listings/{$id}");
     }
   }
