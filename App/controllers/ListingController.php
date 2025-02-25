@@ -223,6 +223,16 @@ class ListingController
       return;
     }
 
+    // check if the request is from the owner
+    if (!Authorization::is_owner($listing->id)) {
+      Session::set_flash_message(
+        key: 'error_message',
+        message: 'You are not permitted to update this listing!'
+      );
+      redirect("/listings/{$listing->id}");
+      exit;
+    }
+
     // filter for allowed fields
     $allowed_fields = ['title', 'description', 'salary', 'tags', 'company', 'address', 'city', 'phone', 'email', 'requirements', 'benefits'];
     $updated_values = array_intersect_key($_POST, array_flip($allowed_fields));
