@@ -61,13 +61,15 @@ function load_view(string $view_name, array $data = []): void
  * Load a partial
  *
  * @param string $partial_name
+ * @param array @data data we want to pass in to partial - default is []
  * @return void
  */
-function load_partial(string $partial_name): void
+function load_partial(string $partial_name, array $data = []): void
 {
   $partial_path = base_path("App/views/partials/{$partial_name}.php");
 
   if (file_exists($partial_path)) {
+    extract($data);
     require($partial_path);
   } else {
     echo "Partial <i>{$partial_name}</i> doesn't exist!";
