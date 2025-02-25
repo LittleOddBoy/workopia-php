@@ -199,6 +199,16 @@ class ListingController
       return;
     }
 
+    // check if the request is from the owner
+    if (!Authorization::is_owner($listing->id)) {
+      Session::set_flash_message(
+        key: 'error_message',
+        message: 'You are not permitted to update this listing!'
+      );
+      redirect("/listings/{$listing->id}");
+      exit;
+    }
+
     load_view("listings/edit", ['listing' => $listing]);
   }
 
