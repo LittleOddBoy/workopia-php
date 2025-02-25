@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Framework\Database;
 use App\Controllers\ErrorController;
+use Framework\Session;
 use Framework\Validation;
 
 class ListingController
@@ -22,7 +23,7 @@ class ListingController
    */
   public function index()
   {
-    $listings = $this->db->query('SELECT * FROM listings')->fetchAll();
+    $listings = $this->db->query('SELECT * FROM listings ORDER BY created_at DESC')->fetchAll();
 
     load_view("listings/index", [
       "listings" => $listings,
@@ -71,7 +72,7 @@ class ListingController
     $allowed_fields = ['title', 'description', 'salary', 'tags', 'company', 'address', 'city', 'phone', 'email', 'requirements', 'benefits'];
 
     $new_listing_data = array_intersect_key($_POST, array_flip($allowed_fields));
-    $new_listing_data['user_id'] = 1;
+    $new_listing_data['user_id'] = Session::get('user')['id'];
 
     // sanitize the input
     $new_listing_data = array_map('sanitize', $new_listing_data);
