@@ -9,6 +9,7 @@ $router->get('/auth/register', 'UserController@create');
 $router->get('/auth/login', 'UserController@login');
 
 $router->post('/listings', 'ListingController@store');
+$router->post('/auth/register', 'UserController@store');
 
 $router->put('/listings/{id}', 'ListingController@update');
 
