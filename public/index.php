@@ -1,4 +1,6 @@
 <?php
+// start session
+session_start();
 require __DIR__ . "/../vendor/autoload.php";
 require '../helpers.php';
 
