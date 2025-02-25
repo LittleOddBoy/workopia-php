@@ -1,10 +1,12 @@
 <?php
-// start session
-session_start();
 require __DIR__ . "/../vendor/autoload.php";
 require '../helpers.php';
 
 use Framework\Router;
+use Framework\Session;
+
+// start the session
+Session::start();
 
 // ! custom (previous and old) auto-loader
 // spl_autoload_register(function ($class) {
