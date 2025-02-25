@@ -109,6 +109,7 @@ class UserController
     // get new user's id
     $user_id = $this->db->conn->lastInsertId();
 
+    // set user session and login
     Session::set(key: 'user', value: [
       'id' => $user_id,
       'name' => $name,
@@ -119,12 +120,81 @@ class UserController
     redirect('/');
   }
 
+  /**
+   * Log the user out
+   *
+   * @return void
+   */
   public function logout(): void
   {
     Session::clear_all();
 
     $cookie_params = session_get_cookie_params();
     setcookie('PHPSESSID', '', time() - 86400, $cookie_params['path'], $cookie_params['domain']);
+
+    redirect('/');
+  }
+
+  /**
+   * Login and authenticate a user
+   *
+   * @return void
+   */
+  public function authenticate(): void
+  {
+    // get form data
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $errors = [];
+
+    // validate the email address
+    if (!Validation::email($email)) {
+      $errors['email'] = "You must enter a valid email address!";
+    }
+
+    // validate the password string
+    if (!Validation::string($password, min: 8, max: 50)) {
+      $errors['password'] = "The password should be 8 to 50 characters long!";
+    }
+
+    // return to view and render errors if they exist
+    if (!empty($errors)) {
+      load_view('users/login', [
+        'errors' => $errors,
+      ]);
+      exit;
+    }
+
+    // check if such email does exist in db
+    $search_params = ['email' => $email];
+    $user = $this->db->query("SELECT * FROM users WHERE email = :email", $search_params)->fetch();
+
+    // return to view and render error if no such user does exist 
+    if (!$user) {
+      $errors['user'] = "No such email does exist!";
+      load_view('users/login', [
+        'errors' => $errors,
+      ]);
+      exit;
+    }
+
+    // check if password is correct 
+    if (!password_verify(password: $password, hash: $user->password)) {
+      $errors['password'] = "Incorrect password!";
+      load_view('users/login', [
+        'errors' => $errors,
+      ]);
+      exit;
+    }
+
+    // set user session and login
+    Session::set(key: 'user', value: [
+      'id' => $user->id,
+      'name' => $user->name,
+      'email' => $user->email,
+      'city' => $user->city,
+    ]);
 
     redirect('/');
   }
