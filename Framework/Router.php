@@ -105,8 +105,8 @@ class Router
       // split the route URI into segments
       $route_segments = explode("/", trim($r['uri'], '/'));
 
-      $match = true;
-      $params_regex = '/\{(.+?)\}/';
+      // $match = true;
+      
 
 
       // check if the number of segments match
@@ -114,10 +114,11 @@ class Router
         count($uri_segments) == count($route_segments) and
         strtoupper($r['method']) == $req_method
       ) {
-        global $match, $params_regex;
+        // global $match, ;
         $params = [];
 
         $match = true;
+        $params_regex = "/\{(.+?)\}/";
 
         for ($i = 0; $i < count($uri_segments); $i++) {
 
@@ -145,7 +146,7 @@ class Router
           }
 
           // extract controller and controller method
-          $controller = 'App\\Controller\\' . $r['controller'];
+          $controller = 'App\\Controllers\\' . $r['controller'];
           $controller_method = $r['controller_method'];
 
           // instantiate the controller and call the method 

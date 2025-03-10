@@ -157,7 +157,7 @@ class ListingController
     }
 
     // check if the request is from the owner
-    if (!Authorization::is_owner($listing->id)) {
+    if (!Authorization::is_owner($listing->user_id)) {
       Session::set_flash_message(
         key: 'error_message',
         message: 'You are not permitted to delete this listing!'
@@ -200,7 +200,8 @@ class ListingController
     }
 
     // check if the request is from the owner
-    if (!Authorization::is_owner($listing->id)) {
+
+    if (!Authorization::is_owner($listing->user_id)) {
       Session::set_flash_message(
         key: 'error_message',
         message: 'You are not permitted to update this listing!'
@@ -234,7 +235,7 @@ class ListingController
     }
 
     // check if the request is from the owner
-    if (!Authorization::is_owner($listing->id)) {
+    if (!Authorization::is_owner($listing->user_id)) {
       Session::set_flash_message(
         key: 'error_message',
         message: 'You are not permitted to update this listing!'
@@ -272,7 +273,7 @@ class ListingController
       // get the updated fields ready
       $updated_fields = [];
       foreach (array_keys($updated_values) as $field) {
-        $updated_fields = "{$field} = :{$field}";
+        $updated_fields[] = "{$field} = :{$field}";
       }
 
       $updated_fields = implode(', ', $updated_fields);

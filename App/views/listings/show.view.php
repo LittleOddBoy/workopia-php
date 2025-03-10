@@ -12,7 +12,7 @@
       </a>
       <?php if (Framework\Authorization::is_owner($listing->user_id)) : ?>
         <div class="flex space-x-4 ml-4">
-          <a href="/listings/edit/<?= $listing->id ?>" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">Edit</a>
+          <a href="/edit/<?= $listing->id ?>" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">Edit</a>
           <!-- Delete Form -->
           <form method="POST">
             <input type="hidden" name="_method" value='DELETE'>

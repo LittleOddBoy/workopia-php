@@ -94,7 +94,7 @@ class Session
    * @param mixed $default return this by default if the session not found
    * @return string
    */
-  public static function get_flash_message(string $key, mixed $default = null): string
+  public static function get_flash_message(string $key, mixed $default = null): string|null
   {
     $message = self::get("flash_{$key}", default: $default);
     self::clear("flash_{$key}");

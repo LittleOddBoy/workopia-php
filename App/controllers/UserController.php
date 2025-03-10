@@ -99,12 +99,12 @@ class UserController
 
     // create user account
     $create_params = [
-      'name' => $name,
+      'fullname' => $name,
       'email' => $email,
       'city' => $city,
-      'password' => password_hash($password, PASSWORD_DEFAULT),
+      'user_password' => password_hash($password, PASSWORD_DEFAULT),
     ];
-    $this->db->query('INSERT INTO users (name, email, city, password) VALUES (:name, :email, :city, :password', $create_params);
+    $this->db->query('INSERT INTO users (`fullname`, `email`, `city`, `user_password`) VALUES (:fullname, :email, :city, :user_password)', $create_params);
 
     // get new user's id
     $user_id = $this->db->conn->lastInsertId();
@@ -180,7 +180,7 @@ class UserController
     }
 
     // check if password is correct 
-    if (!password_verify(password: $password, hash: $user->password)) {
+    if (!password_verify(password: $password, hash: $user->user_password)) {
       $errors['password'] = "Incorrect password!";
       load_view('users/login', [
         'errors' => $errors,
@@ -191,7 +191,7 @@ class UserController
     // set user session and login
     Session::set(key: 'user', value: [
       'id' => $user->id,
-      'name' => $user->name,
+      'name' => $user->fullname,
       'email' => $user->email,
       'city' => $user->city,
     ]);
